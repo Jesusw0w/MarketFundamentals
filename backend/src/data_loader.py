@@ -1,10 +1,6 @@
 import requests
 import time
 import os
-from dotenv import load_dotenv
-
-# Load API key from .env file
-load_dotenv()
 
 class DataLoader:
     BASE_URL = "https://www.alphavantage.co/query"
@@ -80,4 +76,13 @@ class DataLoader:
         Fetch sector performance data.
         """
         params = {"function": "SECTOR"}
+        return self._fetch_data(params)
+
+    def get_income_statement(self, symbol: str):
+        """
+        Fetch income statement data.
+        """
+        params = {"function": "INCOME_STATEMENT",
+                  "symbol": symbol
+        }
         return self._fetch_data(params)
