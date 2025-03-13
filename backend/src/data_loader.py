@@ -1,22 +1,36 @@
 import requests
 import time
 import os
+import redis
+import json
 
 class DataLoader:
     BASE_URL = "https://www.alphavantage.co/query"
 
-    def __init__(self, api_key: str = None):
+    def __init__(self, api_key: str = None, redis_host: str = 'localhost', redis_port: int = 6379):
         """
-        Initialize the DataLoader with an API key.
+        Initialize the DataLoader with an API key and Redis connection.
         """
         self.api_key = api_key or os.getenv("ALPHA_VANTAGE_API_KEY")
         if not self.api_key:
             raise ValueError("Alpha Vantage API key is required.")
 
+        # Initialize Redis connection
+        self.redis = redis.Redis(host=redis_host, port=redis_port, db=0)
+
     def _fetch_data(self, params: dict) -> dict:
         """
-        Private method to handle API requests with rate limit management.
+        Private method to handle API requests with caching and rate limit management.
         """
+        cache_key = self._generate_cache_key(params)
+        cached_data = self.redis.get(cache_key)
+
+        # Return cached data if available
+        if cached_data:
+            print(f"Cache hit for {cache_key}")
+            return json.loads(cached_data)
+
+        print(f"Cache miss for {cache_key}, fetching from API...")
         params["apikey"] = self.api_key
         response = requests.get(self.BASE_URL, params=params)
 
@@ -31,7 +45,15 @@ class DataLoader:
             time.sleep(60)
             return self._fetch_data(params)  # Retry after waiting
 
+        # Cache the data for 1 hour (3600 seconds)
+        self.redis.setex(cache_key, 3600, json.dumps(data))
         return data
+
+    def _generate_cache_key(self, params: dict) -> str:
+        """
+        Generate a unique cache key based on the API function and parameters.
+        """
+        return f"{params['function']}_{params.get('symbol', '')}_{params.get('outputsize', '')}"
 
     def get_bulk_data(self, symbols: list, function="TIME_SERIES_QUARTERLY_ADJUSTED") -> dict:
         """
