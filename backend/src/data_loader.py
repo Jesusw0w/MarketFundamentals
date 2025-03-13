@@ -15,7 +15,6 @@ class DataLoader:
         if not self.api_key:
             raise ValueError("Alpha Vantage API key is required.")
 
-        # Initialize Redis connection
         self.redis = redis.Redis(host=redis_host, port=redis_port, db=0)
 
     def _fetch_data(self, params: dict) -> dict:
