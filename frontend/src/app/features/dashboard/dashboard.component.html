@@ -1,1 +1,11 @@
-<p>dashboard works!</p>
+<div class="container">
+  <h2>Dashboard</h2>
+  <app-navbar></app-navbar>
+
+  <div class="stats">
+    <mat-card class="stat-card" *ngFor="let stat of stats">
+      <mat-card-title>{{ stat.label }}</mat-card-title>
+      <mat-card-content>{{ stat.value }}</mat-card-content>
+    </mat-card>
+  </div>
+</div>
