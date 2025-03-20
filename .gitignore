@@ -174,3 +174,33 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# 🔹 Node Modules (Installed Packages)
+node_modules/
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# 🔹 Angular Build Artifacts
+dist/
+out-tsc/
+
+# 🔹 Environment Configuration (API Keys, Secrets)
+src/environments/environment*.ts
+
+# 🔹 Logs & Debug Files
+npm-debug.log*
+yarn-error.log
+*.log
+
+# 🔹 Editor & OS-Specific Files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# 🔹 Angular Cache & Temporary Files
+.angular/
+.tmp/
