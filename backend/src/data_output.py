@@ -34,7 +34,7 @@ class DataOutput:
         print(f"Data saved to Excel file: {filepath}")
         return filepath
 
-    def save_to_json(self, data: dict or pd.DataFrame, filename: str = None) -> str:
+    def save_to_json(self, data: dict|pd.DataFrame, filename: str = None) -> str:
         """
         Save data (dict or DataFrame) to a JSON file.
 
