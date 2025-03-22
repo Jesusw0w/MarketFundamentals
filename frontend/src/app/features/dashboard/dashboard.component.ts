@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'src/app/core/api.service';
+import { ApiService } from '../../core/api.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
-    this.apiService.getTransactions().subscribe((data) => {
+    this.apiService.getTransactions().subscribe((data: any) => {
       console.log('Transactions:', data);
     });
   }
