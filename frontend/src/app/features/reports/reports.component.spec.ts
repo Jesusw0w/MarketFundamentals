@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReportsComponent } from './reports.component';
-import { ApiService } from 'src/app/core/api.service';
+import { ApiService } from '../../core/api.service';
 import { provideHttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 

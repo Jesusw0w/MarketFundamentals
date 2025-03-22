@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../core/api.service';
 import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { NavbarComponent } from '../../shared/navbar/navbar.component';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatCardModule, NavbarComponent],
 })
 export class DashboardComponent implements OnInit {
   stats = [
